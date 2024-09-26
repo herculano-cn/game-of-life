@@ -6,6 +6,6 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Define the routes for the BoardsController
-  resources :boards, only: [:create]
+  resources :boards, only: [:create, :show]
 
 end
