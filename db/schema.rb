@@ -14,8 +14,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_25_161651) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "boards", force: :cascade do |t|
-    t.jsonb "state"
+  create_table "boards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.jsonb "state", default: []
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
