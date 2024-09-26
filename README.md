@@ -56,14 +56,13 @@ Here are some examples of how to use the API:
 **Request:**
 
 ```bash
-GET /api/v1/board/next_state/:id
+GET /boards/:id/next_state
 ```
 
 **Example response:**
 
 ```json
 {
-  "id": 1,
   "state": [
     [0, 1, 0],
     [0, 0, 1],
@@ -77,21 +76,13 @@ GET /api/v1/board/next_state/:id
 **Request:**
 
 ```bash
-POST /api/v1/board/future_state/:id
-```
-
-**Request body:**
-```json
-{
-  "generations": 5
-}
+POST /boards/:id/future_state/:generations
 ```
 
 **Example response:**
 
 ```json
 {
-  "id": 1,
   "state": [
     [0, 0, 0],
     [1, 0, 1],
@@ -105,7 +96,7 @@ POST /api/v1/board/future_state/:id
 **Request:**
 
 ```bash
-POST /api/v1/board/final_state/:id
+GET /boards/:id/final_state
 ```
 
 ## Running Tests
