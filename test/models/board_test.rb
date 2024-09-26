@@ -1,6 +1,13 @@
 require "test_helper"
 
 class BoardTest < ActiveSupport::TestCase
+  # O método setup será chamado antes de cada teste
+  setup do
+    @initial_state = [[0, 1, 0], [0, 0, 1], [1, 1, 1]]
+    @stable_state = [[1, 1, 0], [1, 1, 0], [0, 0, 0]]
+    @board = Board.create(state: @initial_state)
+  end
+
   test "should not save board with empty state" do
     board = Board.new(state: [])
     assert_not board.save
@@ -11,13 +18,28 @@ class BoardTest < ActiveSupport::TestCase
     assert board.save
   end
 
+  test "should return the current state of the board" do
+    assert_equal @initial_state, @board.state
+  end
 
-  test "should return the state x generations ahead" do
-    board = Board.new(state: [[0, 1, 0], [0, 0, 1], [1, 1, 1]])
-    future_state = board.future_state!(2)
+  test "should compute next generation correctly" do
+    next_state = @board.next_generation!
 
-    expected_future_state = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+    expected_next_state = [[0, 0, 0], [1, 0, 1], [0, 1, 1]]
+    assert_equal expected_next_state, next_state
+  end
 
-    assert_equal expected_future_state, future_state
+  test "should compute future states correctly" do
+    future_state = @board.future_state!(2)
+     
+    expected_state = [[0, 0, 0], [0, 0, 1], [0, 1, 1]]
+    assert_equal expected_state, future_state
+  end
+
+  test "should detect stable state and return final state" do
+    board_with_stable_state = Board.create(state: @stable_state)
+    
+    final_state = board_with_stable_state.final_state!(10) 
+    assert_equal @stable_state, final_state
   end
 end

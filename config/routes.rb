@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   resources :boards, only: [:create, :show] do
     member do
       get :next_state
-      get 'future_state/:generations', to: 'boards#future_state'
+      get 'future_state/:generations', to: 'boards#future_state', as: :future_state
+      get :final_state
     end
   end
 
