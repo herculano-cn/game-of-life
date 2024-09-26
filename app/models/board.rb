@@ -3,7 +3,7 @@ class Board < ApplicationRecord
   
 
   def next_state!
-    self.state = GameOfLife.new(state).next_state
+    self.state = GameService.new(state).next_state
     save!
     self.state
   end

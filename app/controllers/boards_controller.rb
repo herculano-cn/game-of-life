@@ -1,6 +1,6 @@
 class BoardsController < ApplicationController
-  before_action :set_board, only: [:show]
-  
+  before_action :set_board, only: [:show, :next_state]
+
   # POST /boards
   def create
     @board = Board.new(state: params[:state])
@@ -14,6 +14,11 @@ class BoardsController < ApplicationController
   # GET /boards/:id
   def show
     render json: { state: @board.state }
+  end
+
+   # GET /boards/:id/next_state
+  def next_state
+    render json: { state: @board.next_state! }
   end
 
   private
