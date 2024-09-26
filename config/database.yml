@@ -80,6 +80,4 @@ test:
 #
 production:
   <<: *default
-  database: game_of_life_production
-  username: game_of_life
-  password: <%= ENV["GAME_OF_LIFE_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
