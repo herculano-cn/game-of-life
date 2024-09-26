@@ -1,7 +1,6 @@
 require "test_helper"
 
 class BoardTest < ActiveSupport::TestCase
-  # O método setup será chamado antes de cada teste
   setup do
     @initial_state = [[0, 1, 0], [0, 0, 1], [1, 1, 1]]
     @stable_state = [[1, 1, 0], [1, 1, 0], [0, 0, 0]]
