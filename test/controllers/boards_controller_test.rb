@@ -19,4 +19,9 @@ class BoardsControllerTest < ActionDispatch::IntegrationTest
     get next_state_board_url(@board), as: :json
     assert_response :success
   end
+
+  test "should get future state" do
+    get future_state_board_url(@board, generations: 2), as: :json
+    assert_response :success
+  end
 end
