@@ -175,6 +175,3 @@ Terraform can be used to provision cloud infrastructure for the application. Exa
 
 This project is licensed under the MIT License. See the `LICENSE` file for more details.
 
----
-
-Thank you for using Conway's Game of Life API! If you have any questions or suggestions, feel free to reach out.
