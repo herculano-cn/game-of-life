@@ -1,29 +1,31 @@
 class Board < ApplicationRecord
   validates :state, presence: true
-  
+
+  MAX_GENERATIONS = 1000
+
   def next_generation!
-    self.state = GameService.new(state).next_state
-    save!
+    update_state(GameService.new(state).next_state)
     self.state
   end
 
   # Get the state x generations ahead
   def future_state!(generations)
-    future_state = state
-    generations.times { future_state = GameService.new(future_state).next_state }
-    self.state = future_state
-    save! # Updates only once
+    future_state = GameService.new(state).future_state(generations)
+    update_state(future_state) if future_state != self.state
     self.state
   end
 
   # Gets final state (stable or repeating patterns)
-  def final_state!(max_generations = 1000)
-    previous_states = Set.new
-    max_generations.times do
-      return self.state if previous_states.include?(state)
-      previous_states.add(state.dup) # to avoid duplicates
-      self.next_generation!
-    end
-    raise StandardError, "Max generations reached without a stable state."
+  def final_state!
+    final_state = GameService.new(state).final_state(MAX_GENERATIONS)
+    update_state(final_state) if final_state != self.state
+    self.state
+  end
+
+  private
+
+  def update_state(new_state)
+    self.state = new_state
+    save!
   end
 end

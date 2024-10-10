@@ -18,6 +18,33 @@ class GameService
     new_state
   end
 
+  # Get the state after x generations
+  def future_state(generations)
+    future_state = @state
+    generations.times do
+      future_state = GameService.new(future_state).next_state
+    end
+    future_state
+  end
+
+  # Get the final stable state or repeating pattern
+  def final_state(max_generations)
+    previous_states = Set.new
+    current_state = @state
+
+    max_generations.times do
+      return current_state if previous_states.include?(current_state)
+
+      previous_states.add(current_state.dup)
+      next_state = GameService.new(current_state).next_state
+
+      return current_state if next_state == current_state # Stable state
+      current_state = next_state
+    end
+
+    raise StandardError, "Max generations reached without a stable state."
+  end
+
   private
 
   # Count live neighbors for the given cell
