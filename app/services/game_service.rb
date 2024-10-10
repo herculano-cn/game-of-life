@@ -51,12 +51,14 @@ class GameService
   def count_live_neighbors(x, y)
     directions = [-1, 0, 1]
     live_neighbors = 0
+    state_size = @state.size
+    width_site = @state[0].size
 
     directions.each do |dx|
       directions.each do |dy|
         next if dx == 0 && dy == 0
         new_x, new_y = x + dx, y + dy
-        if new_x.between?(0, @state.size - 1) && new_y.between?(0, @state[0].size - 1)
+        if new_x.between?(0, state_size - 1) && new_y.between?(0, width_site - 1)
           live_neighbors += 1 if @state[new_x][new_y] == 1
         end
       end
